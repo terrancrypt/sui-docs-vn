@@ -1,0 +1,101 @@
+/* Custom Sui theme colors */
+
+/* Dark mode colors */
+:root {
+    /* Accent colors based on Sui Sea (#4DA2FF) */
+    --sl-color-accent-low: #011829;
+    /* Ocean */
+    --sl-color-accent: #4DA2FF;
+    /* Sea (main color) */
+    --sl-color-accent-high: #4DA2FF;
+    /* Aqua */
+
+    /* Text and background colors */
+    --sl-color-white: #FFFFFF;
+    /* Cloud */
+    --sl-color-black: #030F1C;
+    /* Deep Ocean */
+
+    /* Gray scale using Ocean and variations */
+    --sl-color-gray-1: #C0E6FF;
+    /* Aqua for lightest gray */
+    --sl-color-gray-2: #87B8E8;
+    /* Lighter variation */
+    /* --sl-color-gray-3: #4DA2FF; */
+    /* Sea */
+    --sl-color-gray-4: #2B5A8F;
+    /* Darker variation */
+    --sl-color-gray-5: #1A3A5C;
+    /* Mid variation */
+    --sl-color-gray-6: #011829;
+    /* Ocean */
+}
+
+/* Light mode colors */
+:root[data-theme='light'] {
+    /* Accent colors adjusted for light mode */
+    --sl-color-accent-low: #C0E6FF;
+    /* Aqua */
+    --sl-color-accent: #4DA2FF;
+    /* Sea (main color) */
+    --sl-color-accent-high: #4DA2FF;
+    /* Ocean */
+
+    /* Text and background colors for light mode */
+    --sl-color-white: #030F1C;
+    /* Deep Ocean for text */
+    --sl-color-black: #FFFFFF;
+    /* Cloud for background */
+
+    /* Gray scale for light mode */
+    --sl-color-gray-1: #011829;
+    /* Ocean for darkest */
+    --sl-color-gray-2: #1A3A5C;
+    /* Mid variation */
+    --sl-color-gray-3: #2B5A8F;
+    /* Darker variation */
+    --sl-color-gray-4: #4DA2FF;
+    /* Sea */
+    --sl-color-gray-5: #87B8E8;
+    /* Lighter variation */
+    --sl-color-gray-6: #C0E6FF;
+    /* Aqua */
+    --sl-color-gray-7: #E5F3FF;
+    /* Very light variation */
+}
+
+/* Additional customizations for better contrast and readability */
+:root {
+    /* Ensure good contrast for links */
+
+    --sl-color-text-accent: var(--sl-color-accent);
+
+    /* Custom properties for better Sui branding */
+    --sui-sea: #4DA2FF;
+    --sui-ocean: #011829;
+    --sui-aqua: #C0E6FF;
+    --sui-deep-ocean: #030F1C;
+    --sui-cloud: #FFFFFF;
+}
+
+/* Override specific components for better Sui theming */
+.sl-nav a[aria-current="page"],
+.sl-nav a[aria-current="page"]:hover,
+.sl-nav a[aria-current="page"]:focus {
+    background-color: #000000;
+    color: var(--sui-cloud);
+}
+
+
+/* Ensure proper contrast for code blocks */
+:root {
+    --sl-color-code-bg: var(--sui-deep-ocean);
+    --sl-color-code: var(--sui-cloud);
+    --sl-color-text: #ffffff;
+}
+
+:root[data-theme='light'] {
+    --sl-color-code-bg: var(--sui-aqua);
+    --sl-color-code: var(--sui-deep-ocean);
+    --sl-color-text: #000000;
+}

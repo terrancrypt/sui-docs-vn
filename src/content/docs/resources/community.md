@@ -3,8 +3,6 @@ title: Cộng đồng Sui
 description: Tham gia cộng đồng Sui toàn cầu và Việt Nam
 ---
 
-# Cộng đồng Sui
-
 Tham gia cộng đồng Sui sôi động để học hỏi, chia sẻ kiến thức và cùng nhau xây dựng tương lai của Web3.
 
 ## 🌍 Cộng đồng Toàn cầu

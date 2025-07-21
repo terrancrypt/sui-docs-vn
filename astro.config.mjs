@@ -6,13 +6,18 @@ import starlight from "@astrojs/starlight";
 export default defineConfig({
   integrations: [
     starlight({
-      title: "Tài liệu Sui tiếng Việt",
+      title: "",
+      logo: {
+        light: "./src/assets/Sui_Logo_Ocean.svg",
+        dark: "./src/assets/Sui_Logo_White.svg",
+      },
+      customCss: ["./src/styles/custom.css"],
       social: [
-        {
-          icon: "github",
-          label: "GitHub",
-          href: "https://github.com/MystenLabs/sui",
-        },
+        // {
+        //   icon: "github",
+        //   label: "GitHub",
+        //   href: "https://github.com/MystenLabs/sui",
+        // },
         { icon: "discord", label: "Discord", href: "https://discord.gg/sui" },
         {
           icon: "twitter",

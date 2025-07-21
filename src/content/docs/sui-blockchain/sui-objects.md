@@ -3,8 +3,6 @@ title: Sui Objects
 description: Hiểu về hệ thống objects trong Sui blockchain
 ---
 
-# Sui Objects
-
 Sui sử dụng một mô hình dữ liệu dựa trên objects thay vì accounts như các blockchain khác. Điều này cho phép Sui xử lý song song các giao dịch và đạt được hiệu suất cao.
 
 ## Object là gì?

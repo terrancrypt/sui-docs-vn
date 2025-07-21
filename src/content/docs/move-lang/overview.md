@@ -3,8 +3,6 @@ title: Tổng quan về Move Language
 description: Giới thiệu về ngôn ngữ lập trình Move và ứng dụng trên Sui
 ---
 
-# Tổng quan về Move Language
-
 Move là ngôn ngữ lập trình được thiết kế đặc biệt cho blockchain, tập trung vào **an toàn**, **bảo mật** và **hiệu suất**. Được phát triển ban đầu tại Facebook (Meta) cho Diem, Move hiện được sử dụng trên nhiều blockchain khác nhau, bao gồm Sui.
 
 ## Tại sao Move?

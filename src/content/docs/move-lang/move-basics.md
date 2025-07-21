@@ -3,8 +3,6 @@ title: Move Programming Cơ bản
 description: Học các khái niệm cơ bản của ngôn ngữ lập trình Move trên Sui
 ---
 
-# Move Programming Cơ bản
-
 Move là ngôn ngữ lập trình được thiết kế đặc biệt cho blockchain, tập trung vào an toàn và bảo mật. Trên Sui, Move được sử dụng để viết smart contracts.
 
 ## Cấu trúc Project

@@ -3,8 +3,6 @@ title: Tổng quan về Walrus
 description: Giới thiệu về Walrus - giao thức lưu trữ phi tập trung trên Sui
 ---
 
-# Tổng quan về Walrus
-
 Walrus là một **giao thức lưu trữ phi tập trung** được xây dựng trên Sui blockchain, được thiết kế để cung cấp giải pháp lưu trữ dữ liệu có khả năng mở rộng, bền vững và tiết kiệm chi phí cho Web3.
 
 ## Walrus là gì?

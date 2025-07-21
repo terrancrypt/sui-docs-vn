@@ -3,8 +3,6 @@ title: Phát triển DApp trên Sui
 description: Hướng dẫn xây dựng ứng dụng phi tập trung (DApp) trên Sui blockchain
 ---
 
-# Phát triển DApp trên Sui
-
 Phát triển DApp (Decentralized Application) trên Sui bao gồm hai phần chính: smart contracts được viết bằng Move và frontend sử dụng TypeScript SDK.
 
 ## Kiến trúc DApp

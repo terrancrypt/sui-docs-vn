@@ -3,8 +3,6 @@ title: Showcase - Dự án nổi bật trên Sui
 description: Khám phá các dự án và ứng dụng xuất sắc được xây dựng trên Sui blockchain
 ---
 
-# Showcase - Dự án nổi bật trên Sui
-
 Khám phá những dự án đột phá và ứng dụng sáng tạo được xây dựng trên Sui blockchain, từ DeFi, Gaming đến NFTs và Infrastructure.
 
 ## 🏦 DeFi Protocols

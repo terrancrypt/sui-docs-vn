@@ -3,8 +3,6 @@ title: Tổng quan Frontend trên Sui
 description: Hướng dẫn phát triển ứng dụng frontend tương tác với Sui blockchain
 ---
 
-# Tổng quan Frontend trên Sui
-
 Phát triển frontend trên Sui mang đến trải nghiệm mượt mà với các công cụ mạnh mẽ, SDK phong phú và hiệu suất cao. Sui cung cấp một ecosystem hoàn chỉnh để xây dựng các ứng dụng Web3 hiện đại.
 
 ## Tại sao chọn Sui cho Frontend?

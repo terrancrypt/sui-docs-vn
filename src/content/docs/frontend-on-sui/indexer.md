@@ -3,8 +3,6 @@ title: Sui Indexer
 description: Hướng dẫn sử dụng Sui Indexer để query dữ liệu blockchain hiệu quả
 ---
 
-# Sui Indexer
-
 Sui Indexer là một công cụ mạnh mẽ giúp index và query dữ liệu từ Sui blockchain một cách hiệu quả. Nó cung cấp GraphQL API để truy vấn dữ liệu phức tạp.
 
 ## Tại sao cần Indexer?

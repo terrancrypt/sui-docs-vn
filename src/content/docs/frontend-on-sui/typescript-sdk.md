@@ -3,8 +3,6 @@ title: Sui TypeScript SDK
 description: Hướng dẫn sử dụng Sui TypeScript SDK để tương tác với Sui blockchain
 ---
 
-# Sui TypeScript SDK
-
 Sui TypeScript SDK cung cấp các công cụ mạnh mẽ để tương tác với Sui blockchain từ các ứng dụng JavaScript/TypeScript.
 
 ## Cài đặt

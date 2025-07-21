@@ -3,8 +3,6 @@ title: Tổng quan về Sui Blockchain
 description: Giới thiệu tổng quan về Sui blockchain và các đặc điểm nổi bật
 ---
 
-# Tổng quan về Sui Blockchain
-
 Sui là một blockchain layer-1 được thiết kế để hỗ trợ các ứng dụng có độ truyền tải cao với độ trễ thấp. Được phát triển bởi Mysten Labs, Sui mang đến những cải tiến đột phá trong thiết kế blockchain.
 
 ## Đặc điểm nổi bật
