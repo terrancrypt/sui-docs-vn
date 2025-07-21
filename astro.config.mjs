@@ -13,16 +13,20 @@ export default defineConfig({
       },
       customCss: ["./src/styles/custom.css"],
       social: [
-        // {
-        //   icon: "github",
-        //   label: "GitHub",
-        //   href: "https://github.com/MystenLabs/sui",
-        // },
-        { icon: "discord", label: "Discord", href: "https://discord.gg/sui" },
+        {
+          icon: "github",
+          label: "GitHub",
+          href: "https://github.com/terrancrypt/sui-docs-vn",
+        },
+        {
+          icon: "discord",
+          label: "Discord",
+          href: "https://discord.gg/DBRhkYcHeP",
+        },
         {
           icon: "twitter",
           label: "Twitter",
-          href: "https://twitter.com/SuiNetwork",
+          href: "https://x.com/SuiHubAPAC",
         },
       ],
       sidebar: [
