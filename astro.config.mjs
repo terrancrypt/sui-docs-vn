@@ -1,17 +1,18 @@
 // @ts-check
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
+import starlightThemeNova from "starlight-theme-nova";
 
 // https://astro.build/config
 export default defineConfig({
   integrations: [
     starlight({
+      plugins: [starlightThemeNova()],
       title: "",
       logo: {
         light: "./src/assets/Sui_Logo_Ocean.svg",
         dark: "./src/assets/Sui_Logo_White.svg",
       },
-      customCss: ["./src/styles/custom.css"],
       social: [
         {
           icon: "github",
