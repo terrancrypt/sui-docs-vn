@@ -9,7 +9,7 @@ Tham gia cộng đồng Sui sôi động để học hỏi, chia sẻ kiến th�
 
 ### Discord
 **Sui Official Discord**
-- **Link**: [discord.gg/sui](https://discord.gg/sui)
+- **Link**: [discord.com/invite/sui](https://discord.com/invite/sui)
 - **Thành viên**: 100k+
 - **Channels**:
   - `#general`: Thảo luận chung
@@ -17,6 +17,8 @@ Tham gia cộng đồng Sui sôi động để học hỏi, chia sẻ kiến th�
   - `#move-lang`: Thảo luận về Move
   - `#showcase`: Chia sẻ dự án
   - `#jobs`: Cơ hội việc làm
+  - `#vietnam`: Cộng đồng Việt Nam
+  - `#apac`: Khu vực Châu Á - Thái Bình Dương
 
 ### Telegram
 **Sui Community Groups**
@@ -30,35 +32,55 @@ Tham gia cộng đồng Sui sôi động để học hỏi, chia sẻ kiến th�
 - **AMAs**: Phiên hỏi đáp với team
 
 ### Twitter/X
-- **@SuiNetwork**: Tài khoản chính thức
-- **@Mysten_Labs**: Công ty phát triển
+**Global Accounts:**
+- **@SuiNetwork**: Tài khoản chính thức toàn cầu
+- **@Mysten_Labs**: Công ty phát triển Sui
 - **#SuiEcosystem**: Hashtag cộng đồng
 
-## 🇻🇳 Cộng đồng Việt Nam
+**Regional Accounts:**
+- **@SuiNetwork_VN**: [Sui Vietnam Official](https://x.com/suinetwork_vn)
+  - Tin tức và cập nhật cho cộng đồng Việt Nam
+  - Thông báo sự kiện địa phương
+  - Nội dung tiếng Việt
+  
+- **@SuiHubAPAC**: [Sui Hub Asia-Pacific](https://x.com/suihubapac)
+  - Trung tâm thông tin khu vực APAC
+  - Sự kiện và hoạt động Châu Á
+  - Kết nối cộng đồng khu vực
 
-### Telegram Vietnam
-- **Sui Vietnam**: [@SuiVietnam](https://t.me/SuiVietnam)
-- **Sui Developers VN**: [@SuiDevVN](https://t.me/SuiDevVN)
-- **Thành viên**: 5000+ người Việt
+**Community Hashtags:**
+- **#SuiVietnam**: Cộng đồng Việt Nam
+- **#SuiAPAC**: Khu vực Châu Á - Thái Bình Dương
+- **#BuildOnSui**: Phát triển trên Sui
 
-### Facebook Groups
-- **Sui Blockchain Vietnam**
-- **Move Language Vietnam**
-- **Web3 Developers Vietnam**
 
 ### Local Meetups
-```
-📅 Sui Vietnam Meetup
-📍 Ho Chi Minh City
-🗓️ Hàng tháng
-👥 50-100 participants
 
-Topics:
+**Sui Community Calendar**
+- **Link**: [lu.ma/suicommunity](https://lu.ma/suicommunity)
+- **Mô tả**: Lịch sự kiện chính thức của cộng đồng Sui toàn cầu
+- **Cập nhật**: Thường xuyên với các sự kiện mới
+
+**Sự kiện sắp tới:**
+```
+📅 Sui Vietnam Events
+📍 Nhiều địa điểm (HCM, Hà Nội, Đà Nẵng)
+🗓️ Xem lịch chi tiết tại lu.ma/suicommunity
+
+Topics thường gặp:
 • Technical workshops
 • Project showcases  
 • Networking sessions
 • Industry insights
+• Developer training
+• GameFi development
 ```
+
+**Regional Meetups:**
+- **Hồ Chí Minh**: Republic Plaza - Hàng tháng
+- **Hà Nội**: Hoàn Kiếm - Định kỳ
+- **Đà Nẵng**: Sự kiện đặc biệt
+- **Participation**: 50-100+ người tham gia mỗi sự kiện
 
 ## 👨‍💻 Developer Community
 
@@ -82,7 +104,7 @@ Topics:
   - Feature Requests
   - Bug Reports
 
-## 🎓 Educational Resources
+<!-- ## 🎓 Educational Resources
 
 ### YouTube Channels
 **Sui Official**
@@ -103,9 +125,9 @@ Topics:
 ### Podcasts
 - **The Sui Show**: Official podcast
 - **Move Language Talks**: Technical discussions
-- **Vietnamese Podcasts**: Nội dung tiếng Việt
+- **Vietnamese Podcasts**: Nội dung tiếng Việt -->
 
-## 🏆 Events & Hackathons
+<!-- ## 🏆 Events & Hackathons
 
 ### Sui Overflow
 **Quarterly Hackathon**
@@ -291,6 +313,6 @@ Requirements:
 - **Mobile apps**: Community platforms
 - **Real-time chat**: In-app messaging
 - **Project directory**: Searchable database
-- **Skill matching**: Connect collaborators
+- **Skill matching**: Connect collaborators -->
 
 Tham gia cộng đồng Sui để cùng nhau xây dựng tương lai của blockchain! Mọi đóng góp đều được trân trọng và ghi nhận. 🚀 

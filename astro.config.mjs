@@ -13,7 +13,7 @@ export default defineConfig({
     }),
     starlight({
       plugins: [starlightThemeNova()],
-      title: "",
+      title: "SuiHub HCMC",
       logo: {
         light: "./src/assets/Sui_Logo_Ocean.svg",
         dark: "./src/assets/Sui_Logo_White.svg",
