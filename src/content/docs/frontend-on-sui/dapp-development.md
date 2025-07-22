@@ -1,462 +1,279 @@
 ---
-title: Phát triển DApp trên Sui
-description: Hướng dẫn xây dựng ứng dụng phi tập trung (DApp) trên Sui blockchain
+title: Phát Triển DApp Trên Sui
+description: Hướng dẫn chi tiết về phát triển DApp trên Sui blockchain
 ---
 
-Phát triển DApp (Decentralized Application) trên Sui bao gồm hai phần chính: smart contracts được viết bằng Move và frontend sử dụng TypeScript SDK.
+## 🎯 Mục Tiêu Học Tập
 
-## Kiến trúc DApp
+Sau khi hoàn thành tài liệu này, bạn sẽ nắm vững:
+- Kiến trúc và nguyên lý hoạt động của Sui blockchain
+- Cách phát triển DApp (Decentralized Application) trên Sui
+- Tích hợp Sui SDK và dApp Kit vào ứng dụng frontend
+- Thực hiện các transaction blockchain từ giao diện người dùng
+- Best practices trong phát triển DApp hiện đại
 
+## 🏗️ Kiến Trúc Tổng Quan
+
+### 1. DApp Architecture Stack
 ```
-┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│    Frontend     │────│   Sui Network   │────│ Move Contracts  │
-│   (React/Vue)   │    │   (Blockchain)  │    │   (Backend)     │
-└─────────────────┘    └─────────────────┘    └─────────────────┘
-```
-
-## Thiết lập môi trường
-
-### 1. Cài đặt dependencies
-
-```bash
-# Tạo project React
-npx create-react-app sui-dapp --template typescript
-cd sui-dapp
-
-# Cài đặt Sui SDK
-npm install @mysten/sui.js
-npm install @mysten/dapp-kit
-npm install @tanstack/react-query
+Frontend Framework: React + TypeScript + Vite
+UI Library: Tailwind CSS
+Blockchain Layer: Sui Network (Testnet/Mainnet)
+Blockchain SDK: @mysten/dapp-kit + @mysten/sui
+State Management: React Query + React Hooks
+Wallet Integration: Multi-wallet support via dApp Kit
 ```
 
-### 2. Thiết lập wallet connection
+### 2. DApp Project Structure
+```
+src/
+├── App.tsx              # Main DApp component
+├── main.tsx             # DApp entry point với blockchain providers
+├── index.css            # Global DApp styles
+└── components/
+    ├── RandomMemoryNFT.tsx      # NFT minting component (template-based)
+    ├── SelfIntroductionNFT.tsx  # NFT minting component (custom data)
+    └── TransactionResult.tsx    # Blockchain transaction feedback
+```
 
-```tsx
-// App.tsx
-import { createNetworkConfig, SuiClientProvider, WalletProvider } from '@mysten/dapp-kit';
-import { getFullnodeUrl } from '@mysten/sui.js/client';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import '@mysten/dapp-kit/dist/index.css';
+## 🔧 Khái Niệm DApp Cơ Bản
 
+### 1. Sui Blockchain Fundamentals
+- **Sui Network**: Blockchain Layer 1 hiệu năng cao với kiến trúc object-centric
+- **Move Language**: Ngôn ngữ smart contract an toàn và hiệu quả
+- **Object Model**: Mọi thứ trên Sui đều là object có thể sở hữu và chuyển nhượng
+- **Parallel Execution**: Xử lý transaction song song để tăng throughput
+- **Gas Model**: Cơ chế phí transaction linh hoạt và dự đoán được
+
+### 2. DApp Development Concepts
+- **Decentralized Application (DApp)**: Ứng dụng chạy trên blockchain, không có single point of failure
+- **Frontend-Blockchain Integration**: Kết nối giao diện người dùng với smart contracts
+- **Wallet-as-a-Service**: Wallet làm cầu nối giữa user và blockchain
+- **Transaction Flow**: Quy trình từ user action đến blockchain state change
+- **Event-Driven Architecture**: Lắng nghe và phản hồi với blockchain events
+
+### 3. Sui DApp Ecosystem
+- **dApp Kit**: Bộ công cụ chính thức để xây dựng DApp trên Sui
+- **Multi-Wallet Support**: Hỗ trợ nhiều loại wallet (Sui Wallet, Suiet, etc.)
+- **Network Flexibility**: Dễ dàng switch giữa testnet và mainnet
+- **Developer Tools**: Explorer, faucet, và debugging tools
+
+## 📋 DApp Implementation Chi Tiết
+
+Github Repo: https://github.com/terrancrypt/simple-sui-app
+
+### 1. DApp Foundation Setup (main.tsx)
+
+```typescript
+// Cấu hình network cho DApp - hỗ trợ cả testnet và mainnet
 const { networkConfig } = createNetworkConfig({
-  localnet: { url: getFullnodeUrl('localnet') },
-  devnet: { url: getFullnodeUrl('devnet') },
-  testnet: { url: getFullnodeUrl('testnet') },
-  mainnet: { url: getFullnodeUrl('mainnet') },
+  testnet: { url: getFullnodeUrl("testnet") },
+  mainnet: { url: getFullnodeUrl("mainnet") },
 });
 
-const queryClient = new QueryClient();
-
-function App() {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <SuiClientProvider networks={networkConfig} defaultNetwork="testnet">
-        <WalletProvider autoConnect>
-          <div className="App">
-            <WalletConnection />
-            <GameInterface />
-          </div>
-        </WalletProvider>
-      </SuiClientProvider>
-    </QueryClientProvider>
-  );
-}
+// DApp Provider Architecture:
+// 1. QueryClientProvider - Quản lý data caching và synchronization
+// 2. SuiClientProvider - Kết nối với Sui blockchain network
+// 3. WalletProvider - Quản lý wallet connections và authentication
 ```
 
-### 3. Component kết nối ví
+**Giải thích**: Provider architecture là nền tảng của DApp, tạo ra một context layer để chia sẻ blockchain state và functions across toàn bộ ứng dụng mà không cần prop drilling.
 
-```tsx
-// components/WalletConnection.tsx
-import { ConnectButton, useCurrentAccount } from '@mysten/dapp-kit';
+### 2. DApp Wallet Integration
 
-export function WalletConnection() {
-  const currentAccount = useCurrentAccount();
+```typescript
+// Hook để lấy thông tin blockchain account của user
+const account = useCurrentAccount();
 
-  return (
-    <div>
-      <ConnectButton />
-      {currentAccount && (
-        <div>
-          <p>Địa chỉ: {currentAccount.address}</p>
-        </div>
-      )}
-    </div>
-  );
-}
+// Hook để lấy danh sách các wallet đã connect
+const wallets = useWallets();
+
+// Component UI sẵn có cho wallet connection flow
+<ConnectButton />
 ```
 
-## Ví dụ: Game DApp
+**Giải thích**: Wallet integration là cốt lõi của DApp UX. `useCurrentAccount` cung cấp thông tin về địa chỉ blockchain của user, trong khi `ConnectButton` handle toàn bộ flow connect/disconnect với multiple wallet providers.
 
-### 1. Smart Contract (Move)
+### 3. Blockchain Transaction Flow
 
-```move
-// sources/game.move
-module game::rock_paper_scissors {
-    use sui::object::{Self, UID};
-    use sui::transfer;
-    use sui::tx_context::{Self, TxContext};
-    use sui::coin::{Self, Coin};
-    use sui::sui::SUI;
-    use sui::event;
+#### A. Programmable Transaction Blocks (PTBs)
+```typescript
+// Khởi tạo một Programmable Transaction Block
+const tx = new Transaction();
 
-    // Game states
-    const ROCK: u8 = 1;
-    const PAPER: u8 = 2;
-    const SCISSORS: u8 = 3;
+// Thực hiện Move call đến smart contract function
+tx.moveCall({
+  target: `${PACKAGE_ID}::module_name::function_name`,
+  arguments: [tx.object(objectId)], // Object references
+});
 
-    // Errors
-    const EInvalidMove: u64 = 1;
-    const EGameNotFinished: u64 = 2;
-
-    public struct Game has key {
-        id: UID,
-        player1: address,
-        player2: Option<address>,
-        player1_move: Option<u8>,
-        player2_move: Option<u8>,
-        stake: u64,
-        winner: Option<address>,
-    }
-
-    public struct GameCreated has copy, drop {
-        game_id: ID,
-        creator: address,
-        stake: u64,
-    }
-
-    public struct GameFinished has copy, drop {
-        game_id: ID,
-        winner: Option<address>,
-        player1_move: u8,
-        player2_move: u8,
-    }
-
-    public entry fun create_game(
-        stake: Coin<SUI>,
-        ctx: &mut TxContext
-    ) {
-        let game_id = object::new(ctx);
-        let id_copy = object::uid_to_inner(&game_id);
-        
-        let game = Game {
-            id: game_id,
-            player1: tx_context::sender(ctx),
-            player2: option::none(),
-            player1_move: option::none(),
-            player2_move: option::none(),
-            stake: coin::value(&stake),
-            winner: option::none(),
-        };
-
-        event::emit(GameCreated {
-            game_id: id_copy,
-            creator: tx_context::sender(ctx),
-            stake: coin::value(&stake),
-        });
-
-        transfer::transfer(stake, @game);
-        transfer::share_object(game);
-    }
-
-    public entry fun join_game(
-        game: &mut Game,
-        stake: Coin<SUI>,
-        ctx: &TxContext
-    ) {
-        assert!(option::is_none(&game.player2), EGameNotFinished);
-        assert!(coin::value(&stake) == game.stake, EInvalidMove);
-        
-        game.player2 = option::some(tx_context::sender(ctx));
-        transfer::transfer(stake, @game);
-    }
-
-    public entry fun make_move(
-        game: &mut Game,
-        player_move: u8,
-        ctx: &TxContext
-    ) {
-        assert!(player_move >= 1 && player_move <= 3, EInvalidMove);
-        
-        let sender = tx_context::sender(ctx);
-        
-        if (sender == game.player1) {
-            game.player1_move = option::some(player_move);
-        } else if (option::contains(&game.player2, &sender)) {
-            game.player2_move = option::some(player_move);
-        };
-
-        // Check if both players made moves
-        if (option::is_some(&game.player1_move) && 
-            option::is_some(&game.player2_move)) {
-            determine_winner(game);
-        }
-    }
-
-    fun determine_winner(game: &mut Game) {
-        let move1 = *option::borrow(&game.player1_move);
-        let move2 = *option::borrow(&game.player2_move);
-        
-        let winner = if (move1 == move2) {
-            option::none() // Tie
-        } else if (
-            (move1 == ROCK && move2 == SCISSORS) ||
-            (move1 == PAPER && move2 == ROCK) ||
-            (move1 == SCISSORS && move2 == PAPER)
-        ) {
-            option::some(game.player1)
-        } else {
-            game.player2
-        };
-
-        game.winner = winner;
-
-        event::emit(GameFinished {
-            game_id: object::uid_to_inner(&game.id),
-            winner,
-            player1_move: move1,
-            player2_move: move2,
-        });
-    }
-}
-```
-
-### 2. Frontend Integration
-
-```tsx
-// hooks/useGame.ts
-import { useSuiClient, useCurrentAccount } from '@mysten/dapp-kit';
-import { TransactionBlock } from '@mysten/sui.js/transactions';
-import { useQuery, useMutation } from '@tanstack/react-query';
-
-const PACKAGE_ID = "0x..."; // Your deployed package ID
-
-export function useCreateGame() {
-  const suiClient = useSuiClient();
-  const currentAccount = useCurrentAccount();
-
-  return useMutation({
-    mutationFn: async (stake: number) => {
-      if (!currentAccount) throw new Error('Wallet not connected');
-
-      const txb = new TransactionBlock();
-      const [coin] = txb.splitCoins(txb.gas, [txb.pure(stake)]);
-      
-      txb.moveCall({
-        target: `${PACKAGE_ID}::rock_paper_scissors::create_game`,
-        arguments: [coin],
-      });
-
-      return suiClient.signAndExecuteTransactionBlock({
-        signer: currentAccount,
-        transactionBlock: txb,
-      });
-    },
-  });
-}
-
-export function useJoinGame() {
-  const suiClient = useSuiClient();
-  const currentAccount = useCurrentAccount();
-
-  return useMutation({
-    mutationFn: async ({ gameId, stake }: { gameId: string; stake: number }) => {
-      if (!currentAccount) throw new Error('Wallet not connected');
-
-      const txb = new TransactionBlock();
-      const [coin] = txb.splitCoins(txb.gas, [txb.pure(stake)]);
-      
-      txb.moveCall({
-        target: `${PACKAGE_ID}::rock_paper_scissors::join_game`,
-        arguments: [txb.object(gameId), coin],
-      });
-
-      return suiClient.signAndExecuteTransactionBlock({
-        signer: currentAccount,
-        transactionBlock: txb,
-      });
-    },
-  });
-}
-
-export function useMakeMove() {
-  const suiClient = useSuiClient();
-  const currentAccount = useCurrentAccount();
-
-  return useMutation({
-    mutationFn: async ({ gameId, move }: { gameId: string; move: number }) => {
-      if (!currentAccount) throw new Error('Wallet not connected');
-
-      const txb = new TransactionBlock();
-      
-      txb.moveCall({
-        target: `${PACKAGE_ID}::rock_paper_scissors::make_move`,
-        arguments: [txb.object(gameId), txb.pure(move)],
-      });
-
-      return suiClient.signAndExecuteTransactionBlock({
-        signer: currentAccount,
-        transactionBlock: txb,
-      });
-    },
-  });
-}
-```
-
-### 3. Game Interface Component
-
-```tsx
-// components/GameInterface.tsx
-import React, { useState } from 'react';
-import { useCreateGame, useJoinGame, useMakeMove } from '../hooks/useGame';
-
-export function GameInterface() {
-  const [gameId, setGameId] = useState('');
-  const [stake, setStake] = useState(1000000000); // 1 SUI
-
-  const createGame = useCreateGame();
-  const joinGame = useJoinGame();
-  const makeMove = useMakeMove();
-
-  const handleCreateGame = async () => {
-    try {
-      const result = await createGame.mutateAsync(stake);
-      console.log('Game created:', result);
-    } catch (error) {
-      console.error('Error creating game:', error);
-    }
-  };
-
-  const handleJoinGame = async () => {
-    try {
-      const result = await joinGame.mutateAsync({ gameId, stake });
-      console.log('Joined game:', result);
-    } catch (error) {
-      console.error('Error joining game:', error);
-    }
-  };
-
-  const handleMove = async (move: number) => {
-    try {
-      const result = await makeMove.mutateAsync({ gameId, move });
-      console.log('Move made:', result);
-    } catch (error) {
-      console.error('Error making move:', error);
-    }
-  };
-
-  return (
-    <div className="game-interface">
-      <h2>Rock Paper Scissors</h2>
-      
-      <div className="create-game">
-        <h3>Tạo game mới</h3>
-        <input
-          type="number"
-          value={stake}
-          onChange={(e) => setStake(Number(e.target.value))}
-          placeholder="Stake amount"
-        />
-        <button onClick={handleCreateGame} disabled={createGame.isPending}>
-          {createGame.isPending ? 'Creating...' : 'Create Game'}
-        </button>
-      </div>
-
-      <div className="join-game">
-        <h3>Tham gia game</h3>
-        <input
-          type="text"
-          value={gameId}
-          onChange={(e) => setGameId(e.target.value)}
-          placeholder="Game ID"
-        />
-        <button onClick={handleJoinGame} disabled={joinGame.isPending}>
-          {joinGame.isPending ? 'Joining...' : 'Join Game'}
-        </button>
-      </div>
-
-      <div className="make-move">
-        <h3>Chọn nước đi</h3>
-        <button onClick={() => handleMove(1)}>🪨 Rock</button>
-        <button onClick={() => handleMove(2)}>📄 Paper</button>
-        <button onClick={() => handleMove(3)}>✂️ Scissors</button>
-      </div>
-    </div>
-  );
-}
-```
-
-## Event Listening
-
-```tsx
-// hooks/useGameEvents.ts
-import { useSuiClient } from '@mysten/dapp-kit';
-import { useEffect, useState } from 'react';
-
-export function useGameEvents() {
-  const suiClient = useSuiClient();
-  const [events, setEvents] = useState([]);
-
-  useEffect(() => {
-    const subscription = suiClient.subscribeEvent({
-      filter: {
-        Package: PACKAGE_ID,
-      },
-      onMessage: (event) => {
-        setEvents(prev => [...prev, event]);
-      },
-    });
-
-    return () => {
-      subscription.then(unsub => unsub());
-    };
-  }, [suiClient]);
-
-  return events;
-}
-```
-
-## Deployment
-
-### 1. Deploy Smart Contract
-
-```bash
-sui client publish --gas-budget 20000000
-```
-
-### 2. Build Frontend
-
-```bash
-npm run build
-```
-
-### 3. Deploy to hosting service
-
-```bash
-# Example with Vercel
-npm install -g vercel
-vercel --prod
-```
-
-## Best Practices
-
-1. **Error Handling**: Luôn xử lý lỗi từ blockchain
-2. **Loading States**: Hiển thị trạng thái loading cho user
-3. **Transaction Confirmation**: Đợi transaction được confirm
-4. **Gas Optimization**: Tối ưu hóa gas fees
-5. **Security**: Validate tất cả inputs
-6. **User Experience**: Cung cấp feedback rõ ràng
-
-## Testing
-
-```tsx
-// __tests__/Game.test.tsx
-import { render, screen } from '@testing-library/react';
-import { GameInterface } from '../components/GameInterface';
-
-test('renders game interface', () => {
-  render(<GameInterface />);
-  expect(screen.getByText('Rock Paper Scissors')).toBeInTheDocument();
+// Ký và broadcast transaction lên Sui network
+const result = await signAndExecuteTransaction.mutateAsync({
+  transaction: tx,
 });
 ```
 
-Phát triển DApp trên Sui mang lại trải nghiệm mượt mà với tốc độ giao dịch nhanh và chi phí thấp. Hãy bắt đầu với các ví dụ đơn giản và dần dần xây dựng các ứng dụng phức tạp hơn! 
+**Giải thích**: 
+- `Transaction()`: Tạo Programmable Transaction Block - đặc trưng của Sui cho phép gộp nhiều operations
+- `moveCall()`: Invoke smart contract functions được viết bằng Move language  
+- `tx.object()`: Reference đến on-chain objects theo object-centric model của Sui
+- `signAndExecuteTransaction`: Hook xử lý cryptographic signing và network broadcast
+
+#### B. Dynamic Data Transactions
+```typescript
+tx.moveCall({
+  target: `${PACKAGE_ID}::module_name::mint_with_data`,
+  arguments: [
+    tx.pure.string(name),        // Pure value arguments
+    tx.pure.string(description), 
+    tx.pure.string(imageUrl),
+    tx.pure.string(slogan),
+  ],
+});
+```
+
+**Giải thích**: 
+- `tx.pure.*()`: Tạo pure value arguments - data không tồn tại trên blockchain trước đó
+- Type-safe arguments: SDK đảm bảo type matching với Move function parameters
+- Dynamic content: Cho phép user tạo unique on-chain data thông qua DApp interface
+
+### 4. DApp State Management
+
+```typescript
+// DApp UI state - phản ánh blockchain operations
+const [transactionResult, setTransactionResult] = useState<any>(null);
+const [isProcessing, setIsProcessing] = useState(false);
+
+// Blockchain state - được sync từ network
+const account = useCurrentAccount();
+const { data: balance } = useSuiClientQuery('getBalance', { 
+  owner: account?.address 
+});
+
+// State sharing pattern trong DApp architecture
+<MintingComponent 
+  isProcessing={isProcessing}
+  setIsProcessing={setIsProcessing}
+  transactionResult={transactionResult}
+  setTransactionResult={setTransactionResult}
+/>
+```
+
+**Giải thích**: DApp state bao gồm cả UI state (loading, errors) và blockchain state (account, balances, objects). State lifting pattern giúp synchronize giữa multiple components và blockchain operations.
+
+### 5. Error Handling
+
+```typescript
+try {
+  const resData = await signAndExecuteTransaction.mutateAsync({
+    transaction: tx,
+  });
+  setMintResult(resData); // Success case
+} catch (e) {
+  setMintResult({ error: e }); // Error case
+} finally {
+  setIsLoading(false); // Cleanup
+}
+```
+
+**Giải thích**: Sử dụng try-catch để handle cả success và error cases, finally để cleanup state.
+
+## 🎨 UI/UX Patterns
+
+### 1. Loading States
+```typescript
+{isLoading && (
+  <div className="flex items-center justify-center">
+    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+    <span className="ml-3 text-blue-700 font-medium">Minting...</span>
+  </div>
+)}
+```
+
+**Giải thích**: Hiển thị spinner và message khi đang thực hiện transaction để user biết app đang hoạt động.
+
+### 2. Conditional Rendering
+```typescript
+<button
+  disabled={!account || isLoading}
+  className="w-full bg-blue-500 hover:bg-blue-600 disabled:bg-gray-300"
+>
+  {isLoading
+    ? "Minting..."
+    : account
+    ? "Mint NFT"
+    : "Connect Wallet First"}
+</button>
+```
+
+**Giải thích**: Button text và state thay đổi dựa trên điều kiện hiện tại.
+
+### 3. Form Validation
+```typescript
+if (!name || !description || !imageUrl || !slogan) {
+  alert("Please fill in all fields");
+  return;
+}
+```
+
+**Giải thích**: Kiểm tra input trước khi submit để tránh transaction lỗi.
+
+## 🔍 Smart Contract Interaction
+
+### 1. Package và Object IDs
+```typescript
+// Constants để dễ dàng thay đổi
+const PACKAGE_ID = "0x489563cb7a99e87528b871f6f5df62100e96374d7cfc9432af7907f119049151";
+const MEMORY_STORE_ID = "0x0b8391f4a847b3c9b1ec9a4820939906c8520714dcf5f1b4b503f8ab3c33f4c0";
+```
+
+**Giải thích**: Sử dụng constants để dễ maintain và update khi cần thiết.
+
+### 2. Function Targets
+```typescript
+// Format: package_id::module_name::function_name
+target: `${packageObjectId}::my_nft_collection::mint_random_memory_nft`
+```
+
+**Giải thích**: Target string định nghĩa chính xác function nào sẽ được gọi trong smart contract.
+
+## 🚀 Best Practices
+
+### 1. Component Separation
+- **Single Responsibility**: Mỗi component chỉ làm một việc
+- **Props Interface**: Định nghĩa rõ ràng props với TypeScript
+- **Reusability**: Component có thể tái sử dụng
+
+### 2. Error Handling
+- **User-friendly Messages**: Hiển thị lỗi dễ hiểu cho user
+- **Graceful Degradation**: App vẫn hoạt động khi có lỗi
+- **Loading States**: Luôn có feedback khi đang xử lý
+
+### 3. State Management
+- **Lift State Up**: Share state ở component cha
+- **Minimal State**: Chỉ store state cần thiết
+- **Immutable Updates**: Không mutate state trực tiếp
+
+### 4. Performance
+- **Conditional Rendering**: Chỉ render khi cần thiết
+- **Event Handler Optimization**: Tránh re-create functions không cần thiết
+- **Bundle Size**: Chỉ import những gì cần dùng
+
+## 🔗 Key Concepts Summary
+
+1. **Providers**: Wrap app với các provider để chia sẻ functionality
+2. **Hooks**: Sử dụng hooks để tương tác với Sui network và wallet
+3. **Transactions**: Tạo và execute transaction để tương tác với smart contract
+4. **State Management**: Quản lý UI state cho loading, success, error states
+5. **Component Architecture**: Chia nhỏ UI thành các component có thể tái sử dụng
+
+## 📖 Tài Liệu Tham Khảo
+
+- [Sui Documentation](https://docs.sui.io/)
+- [dApp Kit Documentation](https://sdk.mystenlabs.com/dapp-kit)
+- [React Query Documentation](https://tanstack.com/query/latest)
+- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
+
+---
+
+**💡 Tip**: Hãy đọc code trong từng component để hiểu rõ hơn về cách implementation hoạt động! 
