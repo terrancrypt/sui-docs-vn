@@ -2,10 +2,15 @@
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
 import starlightThemeNova from "starlight-theme-nova";
+import mermaid from "astro-mermaid";
 
 // https://astro.build/config
 export default defineConfig({
   integrations: [
+    mermaid({
+      theme: "forest",
+      autoTheme: true,
+    }),
     starlight({
       plugins: [starlightThemeNova()],
       title: "",
@@ -59,6 +64,7 @@ export default defineConfig({
             },
             { label: "TypeScript SDK", slug: "frontend-on-sui/typescript-sdk" },
             { label: "Sui Indexer", slug: "frontend-on-sui/indexer" },
+            { label: "ZK Login", slug: "frontend-on-sui/zk-login" },
           ],
         },
         {
