@@ -44,6 +44,7 @@ export default defineConfig({
               label: "Bắt đầu với Sui",
               slug: "sui-blockchain/getting-started",
             },
+            { label: "GitHub Codespace", slug: "sui-blockchain/github-codespace" },
             { label: "Sui Objects", slug: "sui-blockchain/sui-objects" },
           ],
         },
@@ -52,6 +53,7 @@ export default defineConfig({
           items: [
             { label: "Tổng quan Move", slug: "move-lang/overview" },
             { label: "Move Programming Cơ bản", slug: "move-lang/move-basics" },
+            { label: "Move Programming Nâng cao", slug: "move-lang/move-advanced" },
           ],
         },
         {
