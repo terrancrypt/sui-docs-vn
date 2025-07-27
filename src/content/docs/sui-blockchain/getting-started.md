@@ -43,6 +43,18 @@ export PATH="$PWD/target/release:$PATH"
 brew install sui
 ```
 
+### Cài đặt bằng Chocolatey (window)
+
+```bash
+Choco install sui
+```
+
+### Cài đặt bằng Suiup (experimental)
+
+```bash
+suiup install sui@testnet
+```
+
 ### Kiểm tra cài đặt
 
 ```bash
